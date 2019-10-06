@@ -11,15 +11,15 @@ mkdir temp/dreammaker_fx_1.1.0/examples/dmfx_firmware_updater
 cp -R ~/Github/Dreammaker_FX/dmfx-firmware-updater/dmfx-firmware-updater/* temp/dreammaker_fx_1.1.0/examples/dmfx_firmware_updater/
 
 
-rm arduino-board-index/boards/dreammaker_fx_1.1.0.tar.bz2
+rm arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.bz2
 cd temp/dreammaker_fx_1.1.0/
-tar -cvjSf ../../arduino-board-index/boards/dreammaker_fx_1.1.0.tar.bz2 *
+tar -cvjSf ../../arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.bz2 *
 cd ..
 cd ..
 echo "SHA256:"
-shasum -a 256 arduino-board-index/boards/dreammaker_fx_1.1.0.tar.bz2
+shasum -a 256 arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.bz2
 
 echo "SIZE:"
-stat -x arduino-board-index/boards/dreammaker_fx_1.1.0.tar.bz2
+stat -x arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.bz2
 
 rm -R temp
