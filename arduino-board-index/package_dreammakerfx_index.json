@@ -1,10 +1,9 @@
 {
   "packages": [{
-    "name": "DreanMaker FX by Run Jump Labs",
+    "name": "Run Jump Labs",
     "maintainer": "Run Jump Labs",
-    "websiteURL": "https://dreammakerfx.com",
+    "websiteURL": "https://runjumplabs.github.io/",
     "email": "info@dreammakerfx.com",
-
     "platforms": [{
       "name": "DreamMaker FX",
       "architecture": "samd",
