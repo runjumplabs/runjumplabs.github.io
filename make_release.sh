@@ -1,4 +1,3 @@
-rm -R temp
 mkdir temp
 mkdir temp/dreammaker_fx_1.1.0
 
@@ -22,7 +21,5 @@ shasum -a 256 arduino-board-index/boards/dreammaker_fx_1.1.0.tar.bz2
 
 echo "SIZE:"
 stat -x arduino-board-index/boards/dreammaker_fx_1.1.0.tar.bz2
-# 
-# 
-# 
+
 rm -R temp

@@ -11,8 +11,8 @@
       "category": "Run Jump Labs",
       "url": "https://runjumplabs.github.io/arduino-board-index/boards/dreammaker_fx_1.1.0.tar.bz2",
       "archiveFileName": "dreammaker_fx_1.1.0.tar.bz2",
-      "checksum": "SHA-256:15a611e1917fa8e9fbdecd14be6b5bf0857d93a365fd22f848810c0997516510",
-      "size": "1426917",
+      "checksum": "SHA-256:8898759e7e761dabde78ba677f708e5431a3d4e70654dbebb4bacf03e023f95e",
+      "size": "1426885",
       "boards": [{
         "name": "DreamMaker FX"
       }],
