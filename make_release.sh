@@ -13,8 +13,10 @@ cp -R ~/Github/Dreammaker_FX/dmfx-firmware-updater/dmfx-firmware-updater/* temp/
 
 
 rm arduino-board-index/boards/dreammaker_fx_1.1.0.tar.bz2
-tar -cvjSf arduino-board-index/boards/dreammaker_fx_1.1.0.tar.bz2 ./temp/dreammaker_fx_1.1.0/*
-
+cd temp/dreammaker_fx_1.1.0/
+tar -cvjSf ../../arduino-board-index/boards/dreammaker_fx_1.1.0.tar.bz2 *
+cd ..
+cd ..
 echo "SHA256:"
 shasum -a 256 arduino-board-index/boards/dreammaker_fx_1.1.0.tar.bz2
 
