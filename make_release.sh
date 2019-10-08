@@ -1,3 +1,5 @@
+export COPY_EXTENDED_ATTRIBUTES_DISABLE=true
+
 mkdir temp
 mkdir temp/dreammaker_fx_1.1.0
 
@@ -12,16 +14,16 @@ cp -R ~/Documents/Arduino/libraries/dmfx-arduino/* temp/dreammaker_fx_1.1.0/libr
 
 mkdir temp/dreammaker_fx_1.1.0/bootloaders
 
-rm arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.gz
+rm arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.bz2
 cd temp/dreammaker_fx_1.1.0/
-#tar -cvjSf ../../arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.bz2 *
-tar -czvf ../../arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.gz *
+tar --exclude=".DS_Store" -cvjSf ../../arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.bz2 *
+#tar -czvf ../../arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.gz  *
 cd ..
 cd ..
 echo "SHA256:"
-shasum -a 256 arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.gz
+shasum -a 256 arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.bz2
 
 echo "SIZE:"
-stat -x arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.gz
+stat -x arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.bz2
 
 rm -R temp
