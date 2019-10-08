@@ -15,8 +15,8 @@
       "help": {
         "online": "https://runjumplabs.github.io/dreammaker_fx/"
       },
-      "url": "https://runjumplabs.github.io/arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.gz",
-      "archiveFileName": "dreammaker_fx-samd-1.1.0.tar.gz",
+      "url": "https://runjumplabs.github.io/arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.bz2",
+      "archiveFileName": "dreammaker_fx-samd-1.1.0.tar.bz2",
       "checksum": "SHA-256:9258dcf9c5610336bdcf8e3986b4ce26e786d47e81fb3f2b7536d522ae8321e4",
       "size": "1365735",
       "boards": [{
