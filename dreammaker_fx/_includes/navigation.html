@@ -1,0 +1,17 @@
+<nav>
+
+</nav>
+
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <a href="/"><img src="/assets/images/dfx_logo.png"></a>
+  <h5 class="my-0 mr-md-auto font-weight-normal"></h5>
+  <nav class="my-2 my-md-0 mr-md-3">
+
+  {% for item in site.data.navigation %}
+    <a class="p-2 text-dark" href="{{ item.link }}" {% if page.url == item.link %}class="current"{% endif %}>{{ item.name }}</a>
+  {% endfor %}
+
+  </nav>
+
+</div>

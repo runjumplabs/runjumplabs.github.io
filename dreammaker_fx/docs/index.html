@@ -1,0 +1,368 @@
+---
+layout: default
+title: Docs
+---
+
+
+<div class="container">
+    <div class="row">
+      <!-- sidebar, which will move to the top on a small screen -->
+      <div class="col-sm-3">
+        <nav id="toc" data-toggle="toc" class="sticky-top"></nav>
+      </div>
+      <!-- main content area -->
+      <div class="col-sm-9">
+
+<h1 id="afxtutorial">AFX Tutorial</h1>
+<p>Hi there.  Welcome to this tutorial.  Get ready because pretty soon you're going to blowing minds.  Get excited!  Dang!  </p>
+<h4 id="sohowdoesthisfingthingwork">So how does this f'ing thing work?</h4>
+<p>Okay, here it is: you write simple code (or copy and paste it from the web) into a simple, free programming tool (Arduino).  And then a bunch of magic happens and suddenly you're playing through the coolest effect you've ever heard.  </p>
+<p>In this case, the magic is a super powerful DSP chip that is a friendly companion of the little chip that runs our programs.  This is where all of the processing is done.  But you don't need to know anything about that.  Just believe in magic.</p>
+<h4 id="programmingisthisgoingtohurt">Programming? Is this going to hurt?</h4>
+<p>It's going to be great.  Don't be a baby.  Do you know how to type?  Do you know how to follow basic examples?  Have you ever copied and pasted on a computer before?  You're going to be amazing.  </p>
+<h4 id="programmingits2019isntthereaneasierway">Programming? It's 2019, isn't there an easier way?</h4>
+<p>Programming allows us to do some cooler stuff that gets a bit tricky with some of the more graphical approaches out there.  And we're programming Arduino-style.  Yes, that's a thing.  Are you ready?  Yes you are.  Do not be afraid.  You are going to be great.</p>
+<h4 id="whatisthatwordarduino">What is that word, Arduino?</h4>
+<p>Have you heard about <strong>Arduino</strong>?  If not, Arduino is this little circuit board created about 10 years ago which was designed to make programming hardware easy.  I won't bore you with the details but that shit got huge.  Now lots of people make Arduino-compatible boards (that use their simple programming software) and accessory boards with sensors and other batshit crazy stuff.</p>
+<p>So rather than learning some arcane programming language and software tools, you're using one of the easiest programming tools ever created.  And there are plenty of resources for learning and getting help out there.</p>
+<p>Okay, so buckle in and get ready to blow some minds.</p>
+<h2 id="1installingthearduinotools">1. Installing the Arduino tools</h2>
+<p>First order of business, let's go download some free software and get rolling.  But not right now, as this section hasn't been written yet.</p>
+<h2 id="2learningthearduinotemplate">2. Learning the Arduino template</h2>
+<p>Effects and synth code is coded in the Arduino IDE and coded in the C++ programming language.  However, one doesn't have to be a programmer to use this platform.  The coding patterns for creating various effect and synth components, wiring them together and controlling their parameters is straight forward.</p>
+<p>See the appendix at the end for a quick primer on some of the building blocks that we'll be relying on such as <em>variables</em>, <em>functions</em> and <em>objects</em>.</p>
+<h3 id="basicarduinoanatomy">Basic Arduino anatomy</h3>
+<p>Let's first look at the default Arduino project.  There are two "functions", one is called <code>setup()</code> and another is called <code>loop()</code>.  When the system starts up, it will run any commands in the <code>setup()</code> function first.  And then it will run the <code>loop()</code> function indefinitely.</p>
+<pre><code>void setup() {
+  // put your setup code here, to run once:
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+}
+</code></pre>
+<p>So when creating effects, we will define how the effects connect together in the <code>setup()</code> function and we will then (optionally) adjust the parameters for these effects in the <code>loop()</code> routine.</p>
+<h2 id="3theanatomyofaneffect">3. The anatomy of an effect</h2>
+<p>Let's start by creating a simple echo effect to see how the pieces fit together.</p>
+<h5 id="aaddtheeffectslibraryoffunctions">a. Add the effects library of functions</h5>
+<p>At the top of the file, we'll add a line that will link in all of the functions, variables and objects that you'll use to create your effects.  At the very top of the file, add <code>#include &lt;afx.h&gt;</code>.</p>
+<pre><code>// Include our library of effects routines
+#include &lt;afx.h&gt;
+</code></pre>
+<h5 id="baddanyeffectsorsynthesisobjects">b. Add any effects or synthesis objects</h5>
+<p>Above the setup routine, we will add (aka <em>declare</em>) any effect and synth <em>objects</em> that we'll be using.  When we add an object, we will also provide the initial parameters.  You'll add this line to the top of every Arduino sketch you create.</p>
+<p>In this case, we are going to create a single echo / delay effect object and name it <code>my_echo_1</code>.  When we initialize an echo object, it takes two <em>arguments</em>.  The first is how long the echo is in milliseconds (1000th of a second).  And the second is the <em>feedback</em> ratio (between 0.0 and 1.0) which determines how much audio is fed back into the echo and thus how long the echo lasts.  If feedback is set to 1.0, it will echo forever.  And if feedback is set to 0.0, it won't echo at all.  Let's set the echo length to be 1 second (or 1000 milliseconds) and the feedback ratio at 0.7.</p>
+<pre><code>// Create/declare one echo effect and configure it
+fx_delay   my_echo_1(1000.0,  // 1 second echo
+                     0.7);    // 0.7 feedback ratio
+</code></pre>
+<h5 id="croutetheeffectintoourpedal">c. Route the effect into our pedal</h5>
+<p>Next, in the <code>setup()</code> routine, we need to initialize our effects <code>pedal</code> and route the audio from the pedal in and out jacks through the various effects and synth objects we're using.  In this case, we just have one object.</p>
+<pre><code>void setup() {
+
+  pedal.init();   // Initialize the system
+
+  // Connect our effect(s) to input and output jacks
+  pedal.route_audio(pedal.instr_in, my_echo_1.input);
+  pedal.route_audio(my_echo_1.output, pedal.amp_out);
+
+  pedal.run();    // Run the effect
+
+}
+</code></pre>
+<p>Let's deconstruct what we just did here.</p>
+<p>First, we <em>called</em> the <code>pedal.init();</code> function to set up our system.</p>
+<p>Next, we connected the audio from the input jack of our pedal (aka <code>instr_in</code>) to the input of our echo object (aka <code>my_echo_1.input</code>) using the <code>route_audio()</code> function.</p>
+<p>After this, we connected the output of our echo object (aka <code>my_echo_1.output</code>) to the amp_out jack (aka <code>amp_out</code>) of our pedal.</p>
+<p>And finally, we call <code>pedal.run();</code> which takes our effect configuration, performs the magic, sends it over to the DSP where the effects are run.</p>
+<p>Let's now look at the whole echo effect:</p>
+<pre><code>// Include our library of effects routines
+#include &lt;afx.h&gt;
+
+// Create/declare one echo effect and configure it
+fx_delay   my_echo_1(1000.0,  // 1 second echo
+                     0.7);    // 0.7 feedback ratio
+
+void setup() {
+
+  pedal.init();   // Initialize the system
+
+  // Connect our effect(s) to input and output jacks
+  pedal.route_audio(pedal.instr_in, my_echo_1.input);
+  pedal.route_audio(my_echo_1.output, pedal.amp_out);
+
+  pedal.run();    // Run the effect
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+  // sweet nothings to/from DSP
+  pedal.service();
+}
+</code></pre>
+<p>In this case, we didn't use the <code>loop()</code> function but when we get into dynamically controlling effects and adjusting their parameters on-the-fly, this is where we will do it!</p>
+<p>Appendix A contains a list of the various types of effects and how to use them.</p>
+<h2 id="4thebasicsofcreatingaddingeffects">4. The basics of creating / adding effects</h2>
+<p>As you hopefully remember from 12 seconds ago, we create/declare the effects we want to use at the top of program.</p>
+<pre><code>// Create/declare one echo effect and configure it
+fx_delay   my_echo_1(1000.0, 0.7);
+</code></pre>
+<p>The first word (which in this case is <code>fx_delay</code>) is the <em>type</em> of effect we want to create.  Appendix A has the complete list of the effects that are available.</p>
+<p>We then provide a name for our effect object (which in the example above is <code>my_echo_1</code>).  This needs to be a unique word with no spaces (just characters and underscores really).</p>
+<p>And finally, we provide the initial parameters for that effect (i.e. where the knobs are set initially).</p>
+<p>Appendix A has more details on the effects types and their parameters.</p>
+<p>What's neat is that this <em>object</em> then becomes its own stand-alone effect.  We can create multiple objects of the same type in our program (i.e. multiple delays in this case) that each have their own parameters and which are each wired-in in their own ways.</p>
+<pre><code>// Create/declare one echo effect and configure it
+fx_delay   my_echo_1(1000.0, 0.7);
+fx_delay   my_echo_2(2000.0, 0.8);    // Totally legit!
+</code></pre>
+<p>Just make sure each object you create/declare in your system has a unique name even if they are different effect types.  For example, don't do this:</p>
+<pre><code>// Create/declare one echo effect and configure it
+fx_delay        ricky_bobby(1000.0, 0.7);
+fx_pitch_shift  ricky_bobby(0.8);    // BAD! DON'T DO THIS!
+</code></pre>
+<p>Oh yeah, this is important: in some cases an effect will have a few different ways you can initialize it.  Most effects have a <em>simple</em> initializer that you just need to pass one or two values to.  And, they may have a more <em>advanced</em> initializer that allows you to do ever more things with that effect. Usually the advanced initializer is a super-set of the simple initializer.</p>
+<p>Here's an example of us initializing two <code>fx_amplitude_mod</code> objects with both the simple and advanced initializer functions:</p>
+<pre><code>fx_amplitude_mod    tremelo_1(1.0,     // Rate is 1Hz
+                              0.5);    // Depth is 0.5 (0-&gt;1)
+fx_amplitude_mod    tremelo_2(1.0,      // Rate is 1Hz
+                              0.5,      // Depth is 0.5 (0-&gt;1)
+                              OSC_TRI,  // Modulation waveform is triangle instead of sine
+                              false);   // Not using an external signal as our modulator
+</code></pre>
+<h2 id="5thebasicsofroutingaudio">5. The basics of routing audio</h2>
+<p>Get ready because we're going to start using the word <em>node</em> a lot.  I hope that's okay.  A node is what it sounds like: it's a <em>node</em>.  Or a point of connection.  </p>
+<h5 id="effectaudionodes">Effect audio nodes</h5>
+<p>Each effect has one or more <em>nodes</em> that can pipe audio into it or out of it.  All effects that process audio have both an <code>input</code> node and an <code>output</code> node.  Things like an envelope tracker that are just measuring an audio signal may just have an audio <code>input</code> node but no audio <code>output</code> node.  Also, some effects have additional nodes beyond <code>input</code> and <code>output</code> and this is where shit gets real.  Did you see the movie Inception?  That question will make sense eventually.  </p>
+<p>Details on the nodes that each effect has can be found in Appendix A.</p>
+<h5 id="systemaudionodes">System audio nodes</h5>
+<p>And the system has <em>nodes</em> for input from instrument and output to amp.</p>
+<ul>
+<li><p><code>pedal.instr_in</code> is the input jack of the pedal.  This might blow your mind, but this is actually an output jack in the sense that it is outputting audio that we can send to the inputs of other effects.</p></li>
+<li><p><code>pedal.amp_out</code> is the output hack of the pedal.  This might blow your mind again, but this is actually an input jack in the sense that it is receiving audio from other effects (and then sending to the amp).</p></li>
+</ul>
+<h5 id="connectingnodes">Connecting nodes</h5>
+<p>As we just saw in the echo example, there is a function called <code>route_audio</code> that we use to connect our effects to the input and output jacks of the pedal and also to each other.  The first <em>argument</em> of this function is an output node and the second <em>argument</em> is an input node.</p>
+<p>Let's use it in a (programming) sentence.  In this example, we're going to have a tremelo that then feeds into a delay.  It'll be like having your guitar plugged into a tremelo pedal that then plugs into a delay pedal that then plugs into your amp.  </p>
+<p>(<em>note: if it's not yet obvious, you can call each effect you create just about whatever you want</em>).</p>
+<pre><code>// Create objects for these effects
+fx_amplitude_mod  happy_tremelo(1.0, 0.5);      // 1Hz rate, 0.5 depth
+fx_delay          sweet_baby_echo(1000.0, 0.7); // 1000ms, 0.7 feedback
+
+
+void setup() {
+  pedal.init();   // Initialize the system
+
+  // Route tremelo through echo/delay effect
+  pedal.route_audio(pedal.instr_in, happy_tremelo.input);
+  pedal.route_audio(happy_tremelo.output, sweet_baby_echo.input);
+  pedal.route_audio(sweet_baby_echo.output, pedal.amp_out);
+
+  pedal.run();    // Run the effect
+}
+</code></pre>
+<p>Or let's get more crazy.  Let's say we have a delay pedal and each time through the delay, we're going to pitch shift up.  So it would sound like this: ECHO Echo echo echo (where each time you say 'echo' you say it in a lower pitch voice).</p>
+<p>The fx_delay has two additional nodes called <code>fx_send</code> and <code>fx_receive</code>.  We're going to run these through our handy-dandy pitch shifter.  For this, we're going to use the more advanced delay setup function that allows us to pass a few additional parameters (more info in Appendix A on this):</p>
+<pre><code>// Create objects for these effects
+fx_delay          echoey_snail(1000.0,     // Delay length: 1000ms
+                              1000.0,     // Max delay length: 1000ms
+                              0.7,        // Feedback: 0.7
+                              1.0,        // Feedthrough: 1.0
+                              true);      // Enable delay fx loop
+fx_pitch_shift    shift_down(0.85);       // Pitch shift down 0.85 x current pitch
+
+
+void setup() {
+  pedal.init();   // Initialize the system
+
+  // input -&gt; delay -&gt; output
+  pedal.route_audio(pedal.instr_in, echoey_snail.input);
+  pedal.route_audio(echoey_snail.output, pedal.amp_out);
+
+  // Now patch in pitch shifter into delay fx loop
+  pedal.route_audio(echoey_snail.fx_send, shift_down.input);
+  pedal.route_audio(shift_down.output, echoey_snail.fx_receive);
+
+  pedal.run();    // Run the effect
+}
+</code></pre>
+<p>Pretty cool, right?</p>
+<h5 id="afewroutingrules">A few routing rules</h5>
+<p>Obey these rules to avoid humiliation and sadness:</p>
+<ol>
+<li>An output node can be routed to multiple input nodes</li>
+</ol>
+<pre><code>pedal.route_audio(pedal.instr_in, delay_1.input);
+pedal.route_audio(pedal.instr_in, delay_2.input);
+</code></pre>
+<ol start="2">
+<li>An input node can only have one input.  However, you can use the <code>fx_mixer</code> nodes if you want to send multiple outputs to an input.</li>
+</ol>
+<pre><code>pedal.route_audio(delay_1.output, my_mixer_2.input_1);
+pedal.route_audio(delay_2.output, my_mixer_2.input_2);
+pedal.route_audio(my_mixer_2, pedal.amp_out);
+</code></pre>
+<ol start="3">
+<li>And you can't route input nodes to other input nodes, or output nodes to other output nodes.  It's always output-&gt;input.</li>
+</ol>
+<h2 id="6thebasicsofcontrollingeffects">6. The basics of controlling effects</h2>
+<p>We've been talking a lot about getting effects set up and running.  Now let's talk about how to change the proverbial knobs on the effects once they're running.</p>
+<p>Now, take a deep breath and get comfortable because this next sentence is important.  There are two ways we can control effects: 1) we can use other effects that generate control signals (like the envelope tracker) to control the parameters of other effects OR 2) we can control the parameters directly from our program.</p>
+<h5 id="option1usingeffectcontrolnodes">Option 1: Using effect control nodes</h5>
+<p>Similar to our audio nodes, all effects have several <em>control nodes</em> that are inputs for controlling their individual parameters (like delay length and feedback).  Some effects have <em>control node</em> outputs like the envelop filter which are control signals based on the audio going through these effects.</p>
+<p>Remember when you read "an envelope tracker is just measuring an audio signal and may just have an audio <code>input</code> node but no audio <code>output</code> node"?  Well, the envelop tracker has an <em>audio</em> <code>input</code> node and a <em>control</em> <code>output</code> node.  Similarly, a synth have a <em>control</em> <code>input</code> node (like a musical node to play) but have an <em>audio</em> <code>output</code> node where the synthesized audio is sent.</p>
+<p>We can route these control signals just like we do audio signals using the <code>route_control</code> function.</p>
+<p>For example, let's say we wanted to create a sweet envelope filter.  Essentially what an envelope filter is a bandpass filter that changes frequency based on how loud you are playing.  So what we want to do is take the output of the envelop tracker (which tracks how loud the notes we play are) and send this to the center frequency control parameter of a bandbass filter.</p>
+<p>Before we get into building this effect, here's one important detail about how we use the <code>route_control</code> function: The <code>route_control()</code> function takes two additional values beyond the input and output node: an offset and a scale factor.  Here's what that means.  The envelop tracker will generate a control signal between 0 and 1.0 indicating the current volume of the notes we're playing.  However, we want to sweep our filter from say 600Hz to 1400Hz (typical range of a wah pedal).  So we want to scale our signal that goes from 0 to 1 to one that goes from 600 to 1400.  So we'll use an offset of 600.0 and then the signal by 800.0.  Here's the equation to keep in the back of your brain:</p>
+<p><code>output = (input x scale_factor) + offset_factor</code></p>
+<p>So let's create our envelop filter:</p>
+<pre><code>fx_biquad_filter    auto_wah_filter(800.0,              // Initial freq
+                                    BIQUAD_TYPE_BPF,    // Filter type is bandpass
+                                    FILTER_WIDTH_NARROW); // Filter is narrow
+fx_envelope_tracker vol_tracker(0.1);   // Slow decay rate
+
+void setup() {
+  edal.init();   // Initialize the system
+
+  // input -&gt; filter -&gt; output
+  pedal.route_audio(pedal.instr_in, auto_wah_filter.input);
+  pedal.route_audio(auto_wah_filter.output, pedal.amp_out);
+
+  // Also send audio in to our envelope tracker to measure the signal
+  pedal.route_audio(pedal.instr_in, vol_tracker.input);
+
+  // Finally, route the control signals so the envelope tracker can control
+  // the filter with scale and offset values
+  pedal.route_control(vol_tracker.envelope, auto_wah_filter.freq, 800.0, 600.0);
+
+  pedal.run();    // Run the effect
+}
+</code></pre>
+<h5 id="option2directlycontrollingparameters">Option 2: Directly controlling parameters</h5>
+<p>All effects also include dedicated routines for controlling their parameters.  When these routines are called, the effects running on the DSP are immediately updated so these happen in real time.</p>
+<p>The <code>loop()</code> function is where we can make these modifications.</p>
+<p>Now the question is what value would we use to modify these effects.  We happen to have three knobs or "pots" as they're known (short for potentiometer which is a variable resistor).  In our loop function, we can check if these knobs have changed and updated parameters accordingly.</p>
+<p>Let's return to our delay effect.  We want our first knob (aka pot0) to control the length of the delay and the second knob to control the feedback.  The pot values vary from 0.0 (all the way left) to 1.0 (all the way right).</p>
+<pre><code>// Include our library of effects routines
+#include &lt;afx.h&gt;
+
+// Create/declare one echo effect and configure it
+fx_delay   my_echo_1(1000.0,  // 1 second echo
+                     0.7);    // 0.7 feedback ratio
+
+void setup() {
+
+  pedal.init();   // Initialize the system
+
+  // Connect our effect(s) to input and output jacks
+  pedal.route_audio(pedal.instr_in, my_echo_1.input);
+  pedal.route_audio(my_echo_1.output, pedal.amp_out);
+
+  pedal.run();    // Run the effect
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+  // Control delay length with pot0
+  if (pedal.pot0.has_changed()) {
+    my_echo_1.set_length_ms(pot0.val * 1000.0);
+  }
+
+  // Control delay feedback with pot1
+  if (pedal.pot1.has_changed()) {
+    my_echo_1.set_length_ms(pot1.val);
+  }
+
+  // sweet nothings to/from DSP
+  pedal.service();
+
+}
+</code></pre>
+<h5 id="option3controllingeffectswithexternalsensors">Option 3: Controlling effects with external sensors</h5>
+<p>Where things get really cool is when we begin using sensors and other sources outside the pedal to set parameters.  We could use a motion sensor to control a parameter like so</p>
+<pre><code>void loop() {
+  my_echo_1.set_length_ms(motion_sensor_position);
+
+  // sweet nothings to/from DSP
+  pedal.service();
+}
+</code></pre>
+<h2 id="appendixaeffectandsynthesisobjectdocumentation">Appendix A: Effect and synthesis object documentation</h2>
+<p>There is an ever-growing list of effects and synth objects that can be routed and controlled in very interesting and novel ways.  These building blocks can be routed together and novel ways.  And, some building blocks and control the parameters of other building blocks.</p>
+<ul>
+<li><p><code>fx_amplitude_mod</code> - Amplitude modulation continuously changes the volume of the audio running through it and can be used to create tremelo effects and more advanced gating effects.</p></li>
+<li><p><code>fx_biquad_filter</code> - A basic audio filter that filters out certain frequency ranges of audio.  This can be configured as a low-pass, high-pass, band-pass filter, etc.  This block can be  used for general EQ, wah pedals, auto-wahs and envelope filters.  </p></li>
+<li><p><code>fx_clipper</code> - Provides soft and hard clipping functions that can be used to create a wide variety of distortions.  When combined with the <code>fx_biquad_filter</code>, a wide range of tones can be realized to recreate the sounds of tube-amps and distortion pedals.</p></li>
+<li><p><code>fx_compressor</code> - A compressor/limiter block that provides dynamic volume control.  This can be used to create a longer <em>sustain</em> effect on guitars and basses.  It can also be used to keep our audio signals within range so we don't end up with output distortion.</p></li>
+<li><p><code>fx_delay</code> - Used to create delay-based effects like echoes and reverbs.</p></li>
+<li><p><code>fx_envelope_tracker</code> - Tracks the volume of the input signal and can be used to control other effects like <code>fx_biquad_filter</code> for creating an auto-wah / envelope filter.</p></li>
+<li><p><code>gain</code> - Increases or decreases the volume of the audio signal.</p></li>
+<li><p><code>fx_instr_synth</code> - Basically a guitar/bass synth.  Generates synth tones based on the note that is being played.  Follows string bends too.</p></li>
+<li><p><code>fx_looper</code> - A looper effect can capture a sample of audio and loop it indefinitely.  </p></li>
+<li><p><code>fx_mixer</code> - Provides a variety of mixers to mix multiple effect outputs into a single signal.</p></li>
+<li><p><code>fx_oscillator</code> - Various oscillators that can be used to generate audio or control effects.</p></li>
+<li><p><code>fx_pitch_shift</code> - Adjusts the pitch of the incoming signal using a <em>phase vocoder</em>.</p></li>
+<li><p><code>fx_ring_mod</code> - This one is bananas</p></li>
+<li><p><code>fx_variable_delay</code> - This is a short delay line that is varied in real time.  This is core building block for flanger, chorus, and vibrato effects.</p>
+<p>There are several other modules in development including reverbs, all-pass filter, automatic loop detector, etc.</p></li>
+</ul>
+<h3 id="specialparametersandconstants">Special parameters and constants</h3>
+<p>Some objects take inputs that aren't numbers but rather a constant that is chosen from a list.  Below is a list of the constants that may be used when initializing an effect.</p>
+<p><code>BIQUAD_FILTER_TYPE</code>: Types of filters that can be implemented with <code>fx_biquad_fiter</code></p>
+<ul>
+<li><code>BIQUAD_TYPE_LPF</code> - low-pass filter (cuts out high frequencies)</li>
+<li><code>BIQUAD_TYPE_HPF</code> - high-pass filter (cuts out low frequencies)</li>
+<li><code>BIQUAD_TYPE_BPF</code> - band-pass filter (only lets a limited range of frequencies through)</li>
+<li><code>BIQUAD_TYPE_NOTCH</code> - opposite of band-pass</li>
+<li><code>BIQUAD_TYPE_PEAKING</code> - don't worry about it</li>
+<li><code>BIQUAD_TYPE_L_SHELF</code> - similar to low pass</li>
+<li><code>BIQUAD_TYPE_H_SHELF</code> - similar to high pass</li>
+</ul>
+<p><code>BIQUAD_FILTER_WIDTH</code>: How "wide" a filter is for use with <code>fx_biquad_fiter</code></p>
+<ul>
+<li><code>FILTER_WIDTH_VERY_NARROW</code> - very narrow indeed</li>
+<li><code>FILTER_WIDTH_NARROW</code> - like a wah filter</li>
+<li><code>FILTER_WIDTH_MEDIUM</code></li>
+<li><code>FILTER_WIDTH_WIDE</code></li>
+<li>`FILTER<em>WIDTH</em>VERY_WIDE``</li>
+</ul>
+<p><code>ENV_TRACKER_TYPE</code>: Type of envelop tracking</p>
+<ul>
+<li><code>ENV_TRACK_PEAKS</code> - haha, there is only one option - rides the peaks like riding the lion</li>
+</ul>
+<p><code>EFFECT_TRANSITION_SPEED</code>: How quickly to transition parameters when a parameter is modified (used in several effects)</p>
+<ul>
+<li><code>TRANS_VERY_FAST</code> - rabbit</li>
+<li><code>TRANS_FAST</code></li>
+<li><code>TRANS_MED</code></li>
+<li><code>TRANS_SLOW</code></li>
+<li><code>TRANS_VERY_SLOW</code> - turtle</li>
+</ul>
+<p><code>OSC_TYPES</code>: Types of oscillators (used in several effects)</p>
+<ul>
+<li><code>OSC_SINE</code> - sine wave</li>
+<li><code>OSC_TRI</code> - triangle wave</li>
+<li><code>OSC_SQUARE</code> - square wave</li>
+<li><code>OSC_PULSE</code> - pulse wave</li>
+<li><code>OSC_RAMP</code> - ramp wave</li>
+</ul>
+<p><code>POLY_CLIP_FUNC</code>: Various clipping functions for use with <code>fx_clipper</code></p>
+<ul>
+<li><code>POLY_SMOOTHSTEP</code> - try it and see if you like it</li>
+<li><code>POLY_SMOOTHERSTEP</code> - try it and see if you like it</li>
+<li><code>POLY_SIMPLE_1</code> - try it and see if you like it</li>
+<li><code>POLY_SIMPLE_2</code> - try it and see if you like it</li>
+</ul>
+<h3 id="apireference">API Reference</h3>
+
+
+      </div>
+    </div>
+  </div>
+

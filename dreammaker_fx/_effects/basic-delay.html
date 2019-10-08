@@ -1,0 +1,83 @@
+---
+layout: default
+effect_type: delays
+title: Basic Delay
+description: A basic digital delay function
+---
+
+
+<pre>
+#include <afx.h>
+
+/*
+This is a basic digital delay effect.  Pot 1 values are routed 
+to the delay lenght in milliseconds.  Because the pot returns a value from 0.0
+to 1.0, this value is multiplied by 1000.0 so we can do a delay up to 1000.0ms 
+(or 1 second).  Pot 2 values are routed to the feedback parameter of the 
+digital delay effect to determine how long the echoes stick around.
+
+                              +---------+
+                              |         |
+Instr In +------------------->+  Delay  +------------------------> Amp Out
+                              |         |
+                              +---------+
+
+ 
+ */
+
+fx_delay            echoey(1000.0,    // Delay length in milliseconds
+                           0.7);      // Delay feedback ratio
+
+
+void setup() {
+  
+  // put your setup code here, to run once:
+  pedal.init();
+
+  // for template, just pass audio from input to output jack
+  pedal.route_audio(pedal.instr_in, echoey.input);
+  pedal.route_audio(echoey.output, pedal.amp_out);
+
+  // Run this effect
+  pedal.run();
+
+}
+  
+void loop() {
+
+  // Add an event if pot 0 has changed
+  if (pedal.pot_0.has_changed()) { 
+    echoey.set_length_ms(1000.0 * pedal.pot_0.val);
+  } 
+
+  // Add an event if pot 0 has changed
+  if (pedal.pot_1.has_changed()) { 
+    echoey.set_feedback(pedal.pot_1.val);
+  } 
+
+  // Add an event if pot 2 has changed
+  if (pedal.pot_2.has_changed()) { 
+  } 
+
+  // Service 
+  pedal.service();
+}
+
+
+void sw1_pressed() { 
+  Serial.println("SW1 pressed");
+}
+
+void sw2_pressed() { 
+  Serial.println("SW2 pressed");
+}
+
+void sw3_pressed() { 
+  Serial.println("SW3 pressed");
+}
+
+void sw4_pressed() { 
+  Serial.println("SW4 pressed");
+}
+
+</pre>

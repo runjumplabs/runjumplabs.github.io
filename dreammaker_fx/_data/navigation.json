@@ -1,0 +1,6 @@
+[
+	{ "name":"Home", "link":"/"},
+	{ "name":"Products", "link":"/products"},
+	{ "name":"Browse Effects", "link":"/browse"},
+	{ "name":"Docs", "link":"/docs/"}
+]

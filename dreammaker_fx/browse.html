@@ -1,0 +1,28 @@
+---
+layout: default
+title: Browse effects
+---
+
+<h3>Effects by category</h3>
+
+{% for type in site.effect_types %}
+
+<ul>
+	<li>
+      <b5><strong>{{ type.name }}</strong> - {{ type.description }}</h2>
+      
+		{% assign filtered_effects = site.effects | where: 'effect_type', type.effect_type %}
+		<ul>
+			{% for effect in filtered_effects %}				
+			    <li><a href="{{ effect.url }}">{{ effect.title }}</a></li>
+	  	    {% endfor %}
+  		</ul>
+	</li>
+</ul>
+{% endfor %}
+
+
+{% for effect in site.posts %}
+{{ effect.title }}
+{% endfor %}
+

@@ -1,0 +1,52 @@
+.current {
+  color: green;
+}
+
+
+ .effect {
+    display: block;
+    width: 500px;
+    height: 300px;
+    float: left;
+    margin: 10px;
+    background-color: red;
+    border: 1px solid #DDD;
+}
+
+ .btn-space {
+    margin-right: 5px;
+ }
+
+pre {
+    display: block;
+    unicode-bidi: embed;
+    font-family: monospace;
+    white-space: pre;
+    background-color: fffaf0;
+    padding: 10px;
+}
+
+ nav[data-toggle="toc"] {
+  top: 42px;
+}
+
+/* small screens */
+@media (max-width: 768px) {
+  /* override stickyness so that the navigation does not follow scrolling */
+  nav[data-toggle="toc"] {
+    margin-bottom: 42px;
+    position: static;
+  }
+
+  /* PICK ONE */
+  /* don't expand nested items, which pushes down the rest of the page when navigating */
+  nav[data-toggle="toc"] .nav .active .nav {
+    display: none;
+  }
+  /* alternatively, if you *do* want the second-level navigation to be shown (as seen on this page on mobile), use this */
+  /*
+  nav[data-toggle='toc'] .nav .nav {
+    display: block;
+  }
+  */
+}
