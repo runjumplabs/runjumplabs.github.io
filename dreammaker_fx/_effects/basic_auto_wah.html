@@ -1,0 +1,74 @@
+---
+layout: default
+name: basic_auto_wah
+effect_type: envelope-filter-effects
+---
+<pre>
+#include <afx.h>
+
+fx_envelope_tracker   envy_tracky(10, 100, false);
+fx_biquad_filter      wah_filter(300.0, FILTER_WIDTH_NARROW, BIQUAD_TYPE_BPF);
+
+
+void setup() {
+  
+  // put your setup code here, to run once:
+  pedal.init();
+
+  // for template, just pass audio from input to output jack
+  pedal.route_audio(pedal.instr_in, wah_filter.input);
+  pedal.route_audio(wah_filter.output, pedal.amp_out);
+
+  pedal.route_audio(pedal.instr_in, envy_tracky.input);
+  pedal.route_control(envy_tracky.envelope, wah_filter.freq, 1000.0, 300.0);  // map range 0->1 to 300->300+1000
+  
+
+  // Optional code to print out the routing details to console
+  if (true) {
+    pedal.print_instance_stack();
+    pedal.print_routing_table();
+    pedal.print_param_tables();
+  }
+  // Run this effect
+  pedal.run();
+
+}
+  
+void loop() {
+
+  // Add an event if pot 0 has changed
+  if (pedal.pot_0.has_changed()) { 
+  } 
+
+  // Add an event if pot 0 has changed
+  if (pedal.pot_1.has_changed()) { 
+  } 
+
+#if 0
+  // Add an event if pot 2 has changed (DOESN'T WORK ON FIRST GEN HARDWARE YET)
+  if (pedal.pot_2.has_changed()) { 
+  } 
+#endif   
+
+  // Service 
+  pedal.service();
+}
+
+
+void sw1_pressed() { 
+  Serial.println("SW1 pressed");
+}
+
+void sw2_pressed() { 
+  Serial.println("SW2 pressed");
+}
+
+void sw3_pressed() { 
+  Serial.println("SW3 pressed");
+}
+
+void sw4_pressed() { 
+  Serial.println("SW4 pressed");
+}
+
+</pre>

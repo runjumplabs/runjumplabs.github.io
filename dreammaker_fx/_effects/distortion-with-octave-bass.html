@@ -1,0 +1,121 @@
+---
+layout: default
+name: distortion-with-octave-bass
+effect_type: distortion-effects
+---
+<pre>
+#include <afx.h>
+
+/*
+This is a basic soft-clipped distortion with a lower octave mixed in.  The
+clipper is fed into a band-pass filter to give it some shape / tone.  In
+parallel, the clean signal runs through the pitch shifter and is dropped an 
+octave.  It then runs through a low-pass filter to remove everything except for the 
+low fundamental.
+
+
+              +--------------+  +----------------+  +-------+
+              |              |  |                |  |       |
+         +----> Clipper      +--> BPF @ 600Hz    +->+       |
+         |    |              |  | (Tone control) |  |       |
+         |    +--------------+  +----------------+  |       |
+Instr In |                                          |Mixer 2+----> Amp Out
+         |                                          |       |
+         |    +--------------+  +----------------+  |       |
+         |    |              |  |                |  |       |
+         +----> Pitch shift  +->+ LPF (150Hz)    +->+       |
+              | down 1 oct   |  |                |  |       |
+              +--------------+  +----------------+  +-------+
+
+*/
+
+fx_clipper    tube_distort(0.1,     // Clipping threshold (0.0 -> 1.0)
+                           8.0,     // Input drive before clipping function
+                           false,   // Disbale rectify
+                           POLY_SIMPLE_1);  // clipping polynomial
+
+fx_pitch_shift  bass_shift(0.5);   // Octave drop pitch shift
+fx_biquad_filter bass_filter(150.0,     
+                             FILTER_WIDTH_MEDIUM,
+                             BIQUAD_TYPE_LPF);
+
+
+fx_biquad_filter distort_tone(600.0, 
+                              FILTER_WIDTH_MEDIUM,
+                              BIQUAD_TYPE_BPF);
+
+// Mixer
+fx_mixer_2  mixy2;
+                                             
+
+void setup() {
+  
+  // put your setup code here, to run once:
+  pedal.init();
+
+  // for template, just pass audio from input to output jack
+  pedal.route_audio(pedal.instr_in, tube_distort.input);
+  pedal.route_audio(pedal.instr_in, bass_shift.input);
+
+  // Add low end
+  pedal.route_audio(bass_shift.output, bass_filter.input);
+  pedal.route_audio(bass_filter.output, mixy2.input_1);
+
+  // Distort
+  pedal.route_audio(tube_distort.output, distort_tone.input);
+  pedal.route_audio(distort_tone.output, mixy2.input_2);
+  
+  pedal.route_audio(mixy2.output, pedal.amp_out);
+
+  // Optional code to print out the routing details to console
+  if (true) {
+    pedal.print_instance_stack();
+    pedal.print_routing_table();
+    pedal.print_param_tables();
+  }
+  
+  // Run this effect
+  pedal.run();
+
+}
+  
+void loop() {
+
+  // Add an event if pot 0 has changed
+  if (pedal.pot_0.has_changed()) { 
+  } 
+
+  // Add an event if pot 0 has changed
+  if (pedal.pot_1.has_changed()) { 
+  } 
+
+  #if 0
+    // Add an event if pot 2 has changed (DOESN'T WORK ON FIRST GEN HARDWARE YET)
+    if (pedal.pot_2.has_changed()) { 
+    } 
+  #endif   
+
+  // Service 
+  pedal.service();
+}
+
+// Footswitch 1 - typically used for enable/bypass
+void footswitch_1_pressed() { 
+  
+  // Declared as static so state is preserved between calls
+  static bool bypassed = false;
+
+  // Bypass code
+  if (bypassed) {
+    // If we are currently bypassed, switch pedal to active mode and turn on LED next to SW1
+    pedal.enable_fx();
+    digitalWrite(PIN_FOOTSW_LED_1, HIGH); // Turn on LED
+  } else {
+    // If we are currently active, switch pedal to bypassed mode and turn off LED next to SW1
+    pedal.bypass_fx();
+    digitalWrite(PIN_FOOTSW_LED_1, LOW);  // Turn off LED
+  }
+  bypassed = !bypassed; // Toggle bypassed state variable
+}
+
+</pre>

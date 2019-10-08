@@ -1,0 +1,104 @@
+---
+layout: default
+name: basic_delay_with_feedback_pitch_shift
+effect_type: delay-based-effects
+---
+<pre>
+#include <afx.h>
+
+/*
+This is a basic digital delay effect with a twist.  The fx_delay block
+allows us to add additional effects into the feedback loop of the echo.
+In this case, we're going to add a pitch shifter and shift up two
+semi-tones so each time through the delay, the pitch will get higher.
+
+Pot 1 values are routed to the delay lenght in milliseconds.  Because the 
+pot returns a value from 0.0 to 1.0, this value is multiplied by 1000.0 so
+we can do a delay up to 1000.0ms (or 1 second).  Pot 2 values are routed 
+to the feedback parameter of the digital delay effect to determine how long 
+the echoes stick around.
+
+
+                              +---------+
+                              |         |
+Instr In +------------------->+  Delay  +------------------------> Amp Out
+                              |         |
+                              +-+----+--+
+                                |    ^
+                      +---------+    +-----------+
+                      |  fx_send      fx_receive |
+                      |                          |
+                      |  +--------------------+  |
+                      |  |                    |  |
+                      +->+   pitch shift      +->+
+                         |   by pot val       |
+                         |                    |
+                         +--------------------+
+
+ 
+ */
+
+// use "advanced" constructor of delay to tune additional parameters
+fx_delay            echoey(1000.0,    // Delay length in milliseconds
+                           1000.0,    // Max delay (total space allocated)
+                           0.7,       // Delay feedback ratio
+                           0.8,       // Delay feedthrough mix (clean)
+                           true);     // Enable FX send/receive nodes.
+fx_pitch_shift      pitch_up(0.99);    // Set initially to gentle down pitch shift
+
+void setup() {
+  
+  // put your setup code here, to run once:
+  pedal.init();
+
+  // for template, just pass audio from input to output jack
+  pedal.route_audio(pedal.instr_in, echoey.input);
+  pedal.route_audio(echoey.output, pedal.amp_out);
+
+  // Route delay FX send/receive through pitch shifter
+  pedal.route_audio(echoey.fx_send, pitch_up.input);
+  pedal.route_audio(pitch_up.output, echoey.fx_receive);
+
+  // Run this effect
+  pedal.run();
+
+}
+  
+void loop() {
+
+  // Add an event if pot 0 has changed
+  if (pedal.pot_0.has_changed()) { 
+    echoey.set_length_ms(1000.0 * pedal.pot_0.val);
+  } 
+
+  // Pot 1 sets pitch shift from 0.9 to 1.1
+  if (pedal.pot_1.has_changed()) { 
+    pitch_up.set_freq_shift(1.0 + (pedal.pot_1.val*0.2 - 0.1));
+  } 
+
+  // Add an event if pot 2 has changed
+  if (pedal.pot_2.has_changed()) { 
+  } 
+
+  // Service 
+  pedal.service();
+}
+
+
+void sw1_pressed() { 
+  Serial.println("SW1 pressed");
+}
+
+void sw2_pressed() { 
+  Serial.println("SW2 pressed");
+}
+
+void sw3_pressed() { 
+  Serial.println("SW3 pressed");
+}
+
+void sw4_pressed() { 
+  Serial.println("SW4 pressed");
+}
+
+</pre>

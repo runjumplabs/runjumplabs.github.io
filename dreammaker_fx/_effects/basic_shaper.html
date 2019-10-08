@@ -1,0 +1,38 @@
+---
+layout: default
+name: basic_shaper
+effect_type: synth-effects
+---
+<pre>
+#include <afx.h>
+
+fx_shaper   shapey(0.3, 0.8, 0.1, 0.1);
+
+
+void setup() {
+  // put your setup code here, to run once:
+  pedal.init();
+
+  pedal.route_audio(pedal.instr_in, shapey.input);
+  pedal.route_audio(shapey.output, pedal.amp_out);
+
+  // Optional code to print out the routing details to console
+  if (true) {
+    pedal.print_instance_stack();
+    pedal.print_routing_table();
+    pedal.print_param_tables();
+  }
+  // Run this effect
+  pedal.run();
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  
+  
+  // Service 
+  pedal.service();
+}
+
+</pre>

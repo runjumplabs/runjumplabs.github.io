@@ -1,0 +1,98 @@
+---
+layout: default
+name: rich-chorus
+effect_type: variable-delay-based-effects
+---
+<pre>
+#include <afx.h>
+
+fx_variable_delay var_del1(0.31, 0.2, -0.1, OSC_SINE);
+fx_variable_delay var_del2(0.33, 0.1, -0.1, OSC_SINE);
+fx_variable_delay var_del3(0.37, 0.15, -0.1, OSC_SINE);
+
+fx_variable_delay pitch_mod(2.0, 0.3, 0.0, OSC_SINE);
+
+fx_mixer_3    mix3;
+
+fx_gain       post_gain(0.3);
+
+void setup() {
+  
+  // put your setup code here, to run once:
+  pedal.init();
+
+  // for template, just pass audio from input to output jack
+  pedal.route_audio(pedal.instr_in, var_del1.input);
+  pedal.route_audio(pedal.instr_in, var_del2.input);
+  pedal.route_audio(pedal.instr_in, var_del3.input);
+
+  pedal.route_audio(var_del1.output, mix3.input_1);
+  pedal.route_audio(var_del2.output, mix3.input_2);
+  pedal.route_audio(var_del3.output, mix3.input_3);
+  
+  pedal.route_audio(mix3.output, post_gain.input);
+  pedal.route_audio(post_gain.output, pitch_mod.input);
+  pedal.route_audio(pitch_mod.modulated_out, pedal.amp_out);
+
+  // Optional code to print out the routing details to console
+  if (true) {
+    pedal.print_instance_stack();
+    pedal.print_routing_table();
+    pedal.print_param_tables();
+  }
+  // Run this effect
+  pedal.run();
+
+}
+  
+void loop() {
+
+  // Add an event if pot 0 has changed
+  if (pedal.pot_0.has_changed()) { 
+  } 
+
+  // Add an event if pot 0 has changed
+  if (pedal.pot_1.has_changed()) { 
+  } 
+
+  #if 0
+    // Add an event if pot 2 has changed (DOESN'T WORK ON FIRST GEN HARDWARE YET)
+    if (pedal.pot_2.has_changed()) { 
+    } 
+  #endif   
+
+  // Service 
+  pedal.service();
+}
+
+
+// Footswitch 1 - typically used for enable/bypass
+void footswitch_1_pressed() { 
+  
+  // Declared as static so state is preserved between calls
+  static bool bypassed = false;
+
+  // Bypass code
+  if (bypassed) {
+    // If we are currently bypassed, switch pedal to active mode and turn on LED next to SW1
+    pedal.enable_fx();
+    digitalWrite(PIN_FOOTSW_LED_1, HIGH); // Turn on LED
+  } else {
+    // If we are currently active, switch pedal to bypassed mode and turn off LED next to SW1
+    pedal.bypass_fx();
+    digitalWrite(PIN_FOOTSW_LED_1, LOW);  // Turn off LED
+  }
+  bypassed = !bypassed; // Toggle bypassed state variable
+}
+
+// Footswitch 2 - add code here to handle what SW2 does
+void footswitch_2_pressed() { 
+  Serial.println("\nSW2 pressed");
+}
+
+// User PB on PCB - add code here to handle what the User PB on the PCB does
+void user_pb_pressed() { 
+  Serial.println("\nUser PB pressed");
+}
+
+</pre>
