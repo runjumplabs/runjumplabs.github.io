@@ -4,15 +4,21 @@
     "maintainer": "Run Jump Labs",
     "websiteURL": "https://runjumplabs.github.io/",
     "email": "info@dreammakerfx.com",
+    "help": {
+       "online": "https://runjumplabs.github.io/dreammaker_fx/"
+    },
     "platforms": [{
       "name": "DreamMaker FX",
       "architecture": "samd",
       "version": "1.1.0",
-      "category": "Run Jump Labs",
+      "category": "Contributed",
+      "help": {
+        "online": "https://runjumplabs.github.io/dreammaker_fx/"
+      },
       "url": "https://runjumplabs.github.io/arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.bz2",
       "archiveFileName": "dreammaker_fx-samd-1.1.0.tar.bz2",
-      "checksum": "SHA-256:beba56ca1ad1eb1b59af85cb77182f7dfc18788dfb67603a0cb6022f390c0759",
-      "size": "1367986",
+      "checksum": "SHA-256:926ecd64922360a74898191ea2c790eb95738a673a00aada6be91075fc926c2c",
+      "size": "1367965",
       "boards": [{
         "name": "DreamMaker FX"
       }],
