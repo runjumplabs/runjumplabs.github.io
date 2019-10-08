@@ -16,7 +16,7 @@ mkdir temp/dreammaker_fx_1.1.0/bootloaders
 
 rm arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.bz2
 cd temp/dreammaker_fx_1.1.0/
-tar --exclude=".DS_Store" -cvjSf ../../arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.bz2 *
+tar --exclude=".DS_Store" --disable-copyfile -cvjSf ../../arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.bz2 *
 #tar -czvf ../../arduino-board-index/boards/dreammaker_fx-samd-1.1.0.tar.gz  *
 cd ..
 cd ..
