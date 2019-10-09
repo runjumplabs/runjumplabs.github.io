@@ -1,5 +1,5 @@
 baseurl: "/dreammaker_fx"
-production_url : http://runjumplabs.github.io.com/dreammaker_fx
+production_url : https://runjumplabs.github.io/dreammaker_fx
 
 include: ['docs/']
 
