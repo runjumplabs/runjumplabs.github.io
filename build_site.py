@@ -54,9 +54,10 @@ for subdir, dirs, files in os.walk(source_path):
                 line = line + "<ul>\n"
                 line = line + "<li>Created by: {{page.creator}} </li>\n"
                 line = line + "<li>Minimum firmware ver: {{page.min_firmware}} </li>\n"
+                line = line + "<li>Description: {{page.description}} </li>\n"
 
                 line = line + "</ul>\n"
-
+                line = line + "<strong>Arduino sketch</strong>\n"
                 line = line + "<pre><code class=\"cpp\" style=\"arduino\">"
                 line = line + effect['ino_txt']
                 line = line + "\n</code></pre>\n"

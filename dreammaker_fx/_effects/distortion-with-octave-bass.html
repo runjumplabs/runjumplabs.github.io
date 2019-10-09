@@ -2,14 +2,19 @@
 layout: default
 name: distortion-with-octave-bass
 effect_type: distortion-effects
+title: Distortion with dropped octave bass
+creator: Dan
+description: This is a distortion effect which also includes a dropped octave bass note.
+min_firmware: 1.0.0
 ---
 <h5>{{ page.title }} </h3>
 <ul>
 <li>Created by: {{page.creator}} </li>
 <li>Minimum firmware ver: {{page.min_firmware}} </li>
+<li>Description: {{page.description}} </li>
 </ul>
+<strong>Arduino sketch</strong>
 <pre><code class="cpp" style="arduino">#include "dm_fx.h"
-
 /*
 This is a basic soft-clipped distortion with a lower octave mixed in.  The
 clipper is fed into a band-pass filter to give it some shape / tone.  In
@@ -93,17 +98,15 @@ void loop() {
   if (pedal.pot_1.has_changed()) { 
   } 
 
-  #if 0
-    // Add an event if pot 2 has changed (DOESN'T WORK ON FIRST GEN HARDWARE YET)
-    if (pedal.pot_2.has_changed()) { 
-    } 
-  #endif   
+  // Add an event if pot 2 has changed (DOESN'T WORK ON FIRST GEN HARDWARE YET)
+  if (pedal.pot_2.has_changed()) { 
+  } 
 
   // Service 
   pedal.service();
 }
 
-// Footswitch 1 - typically used for enable/bypass
+// Footswitch 1 -  used for enable/bypass
 void footswitch_1_pressed() { 
   
   // Declared as static so state is preserved between calls

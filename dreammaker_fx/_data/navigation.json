@@ -1,6 +1,5 @@
 [
-	{ "name":"Home", "link":"/"},
-	{ "name":"Products", "link":"/products"},
-	{ "name":"Browse Effects", "link":"/browse"},
-	{ "name":"Docs", "link":"/docs/"}
+	{ "name":"Home", "link":"/dreammaker_fx/"},
+	{ "name":"Browse Effects", "link":"/dreammaker_fx/browse"},
+	{ "name":"Docs", "link":"/dreammaker_fx/docs/"}
 ]

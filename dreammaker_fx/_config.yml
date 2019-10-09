@@ -1,6 +1,9 @@
- include: ['docs/']
+baseurl: "/dreammaker_fx"
+production_url : http://runjumplabs.github.io.com/dreammaker_fx
 
- collections:
+include: ['docs/']
+
+collections:
   effect_types:
     output: true
   effects:

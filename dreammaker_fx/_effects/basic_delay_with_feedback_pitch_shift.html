@@ -2,12 +2,18 @@
 layout: default
 name: basic_delay_with_feedback_pitch_shift
 effect_type: delay-based-effects
+title: Digital delay with pitch shift in feedback loop
+creator: Dan
+description: This is a basic digital delay has a pitch shifter inserted into the feedback loop so the echoes either increase or decrease in pitch.
+min_firmware: 1.0.0
 ---
 <h5>{{ page.title }} </h3>
 <ul>
 <li>Created by: {{page.creator}} </li>
 <li>Minimum firmware ver: {{page.min_firmware}} </li>
+<li>Description: {{page.description}} </li>
 </ul>
+<strong>Arduino sketch</strong>
 <pre><code class="cpp" style="arduino">#include "dm_fx.h"
 
 /*
