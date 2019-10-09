@@ -49,9 +49,17 @@ for subdir, dirs, files in os.walk(source_path):
                 if 'min_firmware' in effect:
                     line = line + "min_firmware: "+effect['min_firmware']+"\n"
                 line = line + "---\n"
-                line = line + "<pre>\n"
+
+                line = line + "<h5>{{ page.title }} </h3>\n"
+                line = line + "<ul>\n"
+                line = line + "<li>Created by: {{page.creator}} </li>\n"
+                line = line + "<li>Minimum firmware ver: {{page.min_firmware}} </li>\n"
+
+                line = line + "</ul>\n"
+
+                line = line + "<pre><code class=\"cpp\" style=\"arduino\">"
                 line = line + effect['ino_txt']
-                line = line + "\n</pre>\n"
+                line = line + "\n</code></pre>\n"
 
                 output_file = output_path + effect['name'] + ".html"
 

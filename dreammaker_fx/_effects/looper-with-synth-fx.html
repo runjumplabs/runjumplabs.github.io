@@ -3,8 +3,12 @@ layout: default
 name: looper-with-synth-fx
 effect_type: looper-effects
 ---
-<pre>
-#include <afx.h>
+<h5>{{ page.title }} </h3>
+<ul>
+<li>Created by: {{page.creator}} </li>
+<li>Minimum firmware ver: {{page.min_firmware}} </li>
+</ul>
+<pre><code class="cpp" style="arduino">#include "dm_fx.h"
 
 /*
 This is a basic looper pedal that sends the audio going into the loop through
@@ -120,4 +124,4 @@ void footswitch_2_pressed() {
   looping = !looping;
 }
 
-</pre>
+</code></pre>

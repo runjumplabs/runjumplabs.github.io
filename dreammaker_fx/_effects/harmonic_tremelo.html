@@ -3,8 +3,13 @@ layout: default
 name: harmonic_tremelo
 effect_type: tremelos
 ---
-<pre>
-#include "afx.h"
+<h5>{{ page.title }} </h3>
+<ul>
+<li>Created by: {{page.creator}} </li>
+<li>Minimum firmware ver: {{page.min_firmware}} </li>
+</ul>
+<pre><code class="cpp" style="arduino">#include "dm_fx.h"
+
 /*
 A harmonic tremelo is basically a pair of tremelos that are 180º out of 
 phase.  The first tremelo is run through a low pass filter and the second
@@ -106,4 +111,4 @@ void loop() {
 
 }
 
-</pre>
+</code></pre>

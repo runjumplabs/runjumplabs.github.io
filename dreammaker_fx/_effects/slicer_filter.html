@@ -3,8 +3,12 @@ layout: default
 name: slicer_filter
 effect_type: slicer-based-effects
 ---
-<pre>
-#include "afx.h"
+<h5>{{ page.title }} </h3>
+<ul>
+<li>Created by: {{page.creator}} </li>
+<li>Minimum firmware ver: {{page.min_firmware}} </li>
+</ul>
+<pre><code class="cpp" style="arduino">#include "dm_fx.h"
 
 /*
 
@@ -92,4 +96,4 @@ void loop() {
 
 }
 
-</pre>
+</code></pre>

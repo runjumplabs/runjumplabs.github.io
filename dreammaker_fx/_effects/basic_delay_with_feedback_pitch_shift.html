@@ -3,8 +3,12 @@ layout: default
 name: basic_delay_with_feedback_pitch_shift
 effect_type: delay-based-effects
 ---
-<pre>
-#include <afx.h>
+<h5>{{ page.title }} </h3>
+<ul>
+<li>Created by: {{page.creator}} </li>
+<li>Minimum firmware ver: {{page.min_firmware}} </li>
+</ul>
+<pre><code class="cpp" style="arduino">#include "dm_fx.h"
 
 /*
 This is a basic digital delay effect with a twist.  The fx_delay block
@@ -101,4 +105,4 @@ void sw4_pressed() {
   Serial.println("SW4 pressed");
 }
 
-</pre>
+</code></pre>

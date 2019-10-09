@@ -3,8 +3,12 @@ layout: default
 name: basic_auto_wah
 effect_type: envelope-filter-effects
 ---
-<pre>
-#include <afx.h>
+<h5>{{ page.title }} </h3>
+<ul>
+<li>Created by: {{page.creator}} </li>
+<li>Minimum firmware ver: {{page.min_firmware}} </li>
+</ul>
+<pre><code class="cpp" style="arduino">#include "dm_fx.h"
 
 fx_envelope_tracker   envy_tracky(10, 100, false);
 fx_biquad_filter      wah_filter(300.0, FILTER_WIDTH_NARROW, BIQUAD_TYPE_BPF);
@@ -71,4 +75,4 @@ void sw4_pressed() {
   Serial.println("SW4 pressed");
 }
 
-</pre>
+</code></pre>

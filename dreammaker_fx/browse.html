@@ -14,7 +14,7 @@ title: Browse effects
 		{% assign filtered_effects = site.effects | where: 'effect_type', type.effect_type %}
 		<ul>
 			{% for effect in filtered_effects %}				
-			    <li><a href="{{ effect.url }}">{{ effect.title }}</a></li>
+			    <li><a href="{{ effect.url }}">{{ effect.title }}</a> <br><i>{{effect.description}}</i></li>
 	  	    {% endfor %}
   		</ul>
 	</li>

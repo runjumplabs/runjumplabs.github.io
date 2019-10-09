@@ -3,9 +3,12 @@ layout: default
 name: shaper-synth-out-phased
 effect_type: synth-effects
 ---
-<pre>
-// Requires v1.1 Firmware
-#include <afx.h>
+<h5>{{ page.title }} </h3>
+<ul>
+<li>Created by: {{page.creator}} </li>
+<li>Minimum firmware ver: {{page.min_firmware}} </li>
+</ul>
+<pre><code class="cpp" style="arduino">#include "dm_fx.h"
 
 /*
 This effect sends the clean channel straight through.  It then generates
@@ -73,4 +76,4 @@ void loop() {
   pedal.service();
 }
 
-</pre>
+</code></pre>

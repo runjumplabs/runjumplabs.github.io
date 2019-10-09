@@ -3,8 +3,17 @@ layout: default
 name: rich-chorus
 effect_type: variable-delay-based-effects
 ---
-<pre>
-#include <afx.h>
+<h5>{{ page.title }} </h3>
+<ul>
+<li>Created by: {{page.creator}} </li>
+<li>Minimum firmware ver: {{page.min_firmware}} </li>
+</ul>
+<pre><code class="cpp" style="arduino">#include "dm_fx.h"
+
+/*
+
+
+*/
 
 fx_variable_delay var_del1(0.31, 0.2, -0.1, OSC_SINE);
 fx_variable_delay var_del2(0.33, 0.1, -0.1, OSC_SINE);
@@ -21,7 +30,7 @@ void setup() {
   // put your setup code here, to run once:
   pedal.init();
 
-  // for template, just pass audio from input to output jack
+  // Route audio
   pedal.route_audio(pedal.instr_in, var_del1.input);
   pedal.route_audio(pedal.instr_in, var_del2.input);
   pedal.route_audio(pedal.instr_in, var_del3.input);
@@ -34,32 +43,12 @@ void setup() {
   pedal.route_audio(post_gain.output, pitch_mod.input);
   pedal.route_audio(pitch_mod.modulated_out, pedal.amp_out);
 
-  // Optional code to print out the routing details to console
-  if (true) {
-    pedal.print_instance_stack();
-    pedal.print_routing_table();
-    pedal.print_param_tables();
-  }
   // Run this effect
   pedal.run();
 
 }
   
 void loop() {
-
-  // Add an event if pot 0 has changed
-  if (pedal.pot_0.has_changed()) { 
-  } 
-
-  // Add an event if pot 0 has changed
-  if (pedal.pot_1.has_changed()) { 
-  } 
-
-  #if 0
-    // Add an event if pot 2 has changed (DOESN'T WORK ON FIRST GEN HARDWARE YET)
-    if (pedal.pot_2.has_changed()) { 
-    } 
-  #endif   
 
   // Service 
   pedal.service();
@@ -69,6 +58,8 @@ void loop() {
 // Footswitch 1 - typically used for enable/bypass
 void footswitch_1_pressed() { 
   
+  Serial.println("\nSW1 pressed");
+
   // Declared as static so state is preserved between calls
   static bool bypassed = false;
 
@@ -95,4 +86,4 @@ void user_pb_pressed() {
   Serial.println("\nUser PB pressed");
 }
 
-</pre>
+</code></pre>

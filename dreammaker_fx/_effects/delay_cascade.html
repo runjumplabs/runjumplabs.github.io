@@ -2,9 +2,17 @@
 layout: default
 name: delay_cascade
 effect_type: delay-based-effects
+title: Cascaded digital filter delay
+creator: Dan
+description: Multiple digital delays that are time synchronized that run through various filters
+min_firmware: 1.0.0
 ---
-<pre>
-#include <dm_fx.h>
+<h5>{{ page.title }} </h3>
+<ul>
+<li>Created by: {{page.creator}} </li>
+<li>Minimum firmware ver: {{page.min_firmware}} </li>
+</ul>
+<pre><code class="cpp" style="arduino">#include "dm_fx.h"
 
 fx_delay  stage1(250.0, 1000.0, 0.8, 1.0, false);
 fx_delay  stage2(500.0, 1000.0, 0.7, 1.0, false);
@@ -111,4 +119,4 @@ void user_pb_pressed() {
   Serial.println("\nUser PB pressed");
 }
 
-</pre>
+</code></pre>

@@ -3,8 +3,12 @@ layout: default
 name: basic_shaper
 effect_type: synth-effects
 ---
-<pre>
-#include <afx.h>
+<h5>{{ page.title }} </h3>
+<ul>
+<li>Created by: {{page.creator}} </li>
+<li>Minimum firmware ver: {{page.min_firmware}} </li>
+</ul>
+<pre><code class="cpp" style="arduino">#include "dm_fx.h"
 
 fx_shaper   shapey(0.3, 0.8, 0.1, 0.1);
 
@@ -35,4 +39,4 @@ void loop() {
   pedal.service();
 }
 
-</pre>
+</code></pre>

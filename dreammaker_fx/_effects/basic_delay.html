@@ -7,8 +7,12 @@ creator: Dan
 description: Basic digital delay effect where pots control feedback and delay length
 min_firmware: 1.0.0
 ---
-<pre>
-#include <afx.h>
+<h5>{{ page.title }} </h3>
+<ul>
+<li>Created by: {{page.creator}} </li>
+<li>Minimum firmware ver: {{page.min_firmware}} </li>
+</ul>
+<pre><code class="cpp" style="arduino">#include "dm_fx.h"
 
 /*
 This is a basic digital delay effect.  Pot 1 values are routed 
@@ -23,8 +27,10 @@ Instr In +------------------->+  Delay  +------------------------> Amp Out
                               |         |
                               +---------+
 
+
+Block diagram created with http://asciiflow.com/
  
- */
+*/
 
 fx_delay            echoey(1000.0,    // Delay length in milliseconds
                            0.7);      // Delay feedback ratio
@@ -81,4 +87,4 @@ void sw4_pressed() {
   Serial.println("SW4 pressed");
 }
 
-</pre>
+</code></pre>
