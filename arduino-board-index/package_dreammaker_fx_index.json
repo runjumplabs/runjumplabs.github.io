@@ -48,6 +48,48 @@
           "version": "1.2.0"
         }
       ]
+    },
+    {
+      "name": "DreamMaker FX",
+      "architecture": "samd",
+      "version": "1.2.0",
+      "category": "Contributed",
+      "help": {
+        "online": "https://runjumplabs.github.io/dreammaker_fx/"
+      },
+      "url": "https://runjumplabs.github.io/arduino-board-index/boards/dreammaker_fx-samd-1.2.0.tar.bz2",
+      "archiveFileName": "dreammaker_fx-samd-1.2.0.tar.bz2",
+      "checksum": "SHA-256:170b1aa79c48720cfbf40d1b63d73e5a79e8ba38a59e01d1a33b0dd5491ee1fd",
+      "size": "1373106",
+      "boards": [{
+        "name": "DreamMaker FX"
+      }],
+      "toolsDependencies": [{
+          "name": "arm-none-eabi-gcc",
+          "packager": "arduino",
+          "version": "4.8.3-2014q1"
+        },
+        {
+          "name": "bossac",
+          "packager": "arduino",
+          "version": "1.8.0-48-gb176eee"
+        },
+        {
+          "name": "openocd",
+          "packager": "arduino",
+          "version": "0.9.0-arduino"
+        },
+        {
+          "name": "CMSIS",
+          "packager": "arduino",
+          "version": "4.5.0"
+        },
+        {
+          "name": "CMSIS-Atmel",
+          "packager": "arduino",
+          "version": "1.2.0"
+        }
+      ]
     }],
     "tools": []
   }]
