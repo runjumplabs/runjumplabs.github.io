@@ -340,7 +340,7 @@
         "name": "CMSIS-Atmel",
         "packager": "arduino",
         "version": "1.2.0"
-      },
+      }
     ]
   },
   {
@@ -382,7 +382,7 @@
         "name": "CMSIS-Atmel",
         "packager": "arduino",
         "version": "1.2.0"
-      },          
+      }         
     ]
   }  
   ],
