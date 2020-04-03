@@ -341,10 +341,9 @@
         "packager": "arduino",
         "version": "1.2.0"
       },
-
     ]
   },
-      {
+  {
     "name": "DreamMaker FX",
     "architecture": "samd",
     "version": "1.6.3",
@@ -383,11 +382,9 @@
         "name": "CMSIS-Atmel",
         "packager": "arduino",
         "version": "1.2.0"
-      },
-          
+      },          
     ]
   }  
-
   ],
     "tools": []
   }]
