@@ -395,8 +395,8 @@
     },
     "url": "https://runjumplabs.github.io/arduino-board-index/boards/dreammaker_fx-samd-1.6.4.tar.bz2",
     "archiveFileName": "dreammaker_fx-samd-1.6.4.tar.bz2",
-    "checksum": "SHA-256:ccd7936f11a97601760281adeb4b8aaf263011d79a7bad1f49518a1a88c4c7af",
-    "size": "2563127",
+    "checksum": "SHA-256:557c8385ad6c2d354b11b781f6f5ad0582cc993d84b6adeb8b3d713c3f7e8da5",
+    "size": "2562935",
     "boards": [{"name": "DreamMaker FX"},
                {"name": "DreamMaker FX Two"}
      ],
