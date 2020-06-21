@@ -430,15 +430,15 @@
   {
     "name": "DreamMaker FX",
     "architecture": "samd",
-    "version": "1.6.5",
+    "version": "1.6.6",
     "category": "Contributed",
     "help": {
       "online": "https://runjumplabs.github.io/dreammaker_fx/"
     },
-    "url": "https://runjumplabs.github.io/arduino-board-index/boards/dreammaker_fx-samd-1.6.5.tar.bz2",
-    "archiveFileName": "dreammaker_fx-samd-1.6.5.tar.bz2",
-    "checksum": "SHA-256:3bdaf5870d12bc46c59d9e24b3805d89786b1c1e0bff76a8443c6f48923f7819",
-    "size": "2564886",
+    "url": "https://runjumplabs.github.io/arduino-board-index/boards/dreammaker_fx-samd-1.6.6.tar.bz2",
+    "archiveFileName": "dreammaker_fx-samd-1.6.6.tar.bz2",
+    "checksum": "SHA-256:959dd2e13b8f8ba1c2e2497da8ecefe5bf2bc1c609b2ba0d2012ca7037aa802f",
+    "size": "2564487",
     "boards": [{"name": "DreamMaker FX"},
                {"name": "DreamMaker FX Two"}
      ],
